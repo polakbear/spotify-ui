@@ -1,0 +1,42 @@
+query getGenres {
+    genres {
+        result {
+            name
+        }
+    }
+}
+
+query searchArtists($searchString: String!) {
+    artists(searchString: $searchString) {
+        result {
+            id
+            images {
+                url
+                height
+                width
+            }
+            name
+            genres {
+                name
+            }
+        }
+    }
+}
+
+query loadRecommendations($features: AudioFeatures) {
+    recommendations(audioFeatures: $features) {
+        tracks {
+            artists {
+                name
+            }
+            album {
+                name
+            }
+            name
+            duration_human
+            popularity
+            preview_url
+            href
+        }
+    }
+}
