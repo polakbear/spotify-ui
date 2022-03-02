@@ -44,7 +44,7 @@ type Image {
 type Query {
     artists(searchString: String!): ArtistsResult
     genres: GenresResult
-    recommendations(audioFeatures: AudioFeatures): RecommendationsResult
+    recommendations(audioFeatures: AudioFeatures, seedGenres: String): RecommendationsResult
     songs(searchString: String!): SongsResult
 }
 
@@ -58,7 +58,7 @@ type SongsResult {
 
 type Track {
     album: Album
-    artists: [Artist]
+    artists: [String]
     available_markets: [String]
     disc_number: Int
     duration_human: String

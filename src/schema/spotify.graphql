@@ -23,12 +23,10 @@ query searchArtists($searchString: String!) {
     }
 }
 
-query loadRecommendations($features: AudioFeatures) {
-    recommendations(audioFeatures: $features) {
+query loadRecommendations($features: AudioFeatures, $genres: String) {
+    recommendations(audioFeatures: $features, seedGenres: $genres) {
         tracks {
-            artists {
-                name
-            }
+            artists
             album {
                 name
             }
@@ -37,6 +35,7 @@ query loadRecommendations($features: AudioFeatures) {
             popularity
             preview_url
             href
+            uri
         }
     }
 }

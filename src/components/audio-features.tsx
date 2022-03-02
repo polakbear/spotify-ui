@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { SimpleButton } from './button';
-import { useLoadRecommendationsLazyQuery } from '../generated/graphql';
+import { Track, useLoadRecommendationsLazyQuery } from '../generated/graphql';
 import { FeatureSlider } from './feature-slider';
 import { Genres } from './genres';
 import { Widget } from './styles';
+import { Recommendations } from './recommendations';
 
 export const AudioFeatures: React.FC = () => {
   const [acousticValue, setAcousticValue] = useState('0');
@@ -12,6 +13,8 @@ export const AudioFeatures: React.FC = () => {
   const [instrumentalValue, setInstrumentalValue] = useState('0');
   const [popularValue, setPopularValue] = useState('0');
   const [livelyValue, setLivelyValue] = useState('0');
+
+  const [selectedGenres, setSelectedGenres] = useState('');
 
   const [tracks, setTracks] = useState<any>(null);
 
@@ -24,43 +27,66 @@ export const AudioFeatures: React.FC = () => {
     min_liveness: parseFloat(livelyValue) / 100,
   };
 
-  const [getRecommendations, { data, error, loading }] =
-    useLoadRecommendationsLazyQuery();
+  const [getRecommendations, { data }] = useLoadRecommendationsLazyQuery();
 
   const getRec = () => {
     try {
       void getRecommendations({
         variables: {
           features: audioFeatures,
+          genres: selectedGenres,
         },
       });
+
+      console.log(selectedGenres);
 
       const trackData = data?.recommendations?.tracks;
 
       if (trackData) {
         setTracks(trackData);
-        console.log(trackData);
       }
     } catch (e) {
       console.error(e);
     }
   };
 
+  let trackList = [];
+
+  if (tracks) {
+    trackList = tracks.map((t: Track) => {
+      return {
+        title: t.name,
+        artist: t.artists?.join(',') ?? '',
+        album: t.album?.name,
+        duration: t.duration_human,
+      };
+    });
+  }
+
+  const updateGenres = (genres: string) => {
+    setSelectedGenres(genres);
+  };
+
   return (
-    <div>
-      <Widget>
-        <Genres />
+    <>
+      <div>
+        <Widget>
+          <Genres updateGenres={updateGenres} />
+        </Widget>
+        <div>foo</div>
+        <Widget>
+          <FeatureSlider onChange={setAcousticValue} name="acoustic" />
+          <FeatureSlider onChange={setDanceableValue} name="danceable" />
+          <FeatureSlider onChange={setEnergeticValue} name="energetic" />
+          <FeatureSlider onChange={setInstrumentalValue} name="instrumental" />
+          <FeatureSlider onChange={setPopularValue} name="popular" />
+          <FeatureSlider onChange={setLivelyValue} name="lively" />
+        </Widget>
+        <SimpleButton label="Magic!" onClick={() => getRec()} />
+      </div>
+      <Widget sx={{ padding: 0 }}>
+        {tracks !== undefined && <Recommendations tracks={trackList} />}
       </Widget>
-      <div>foo</div>
-      <Widget>
-        <FeatureSlider onChange={setAcousticValue} name="acoustic" />
-        <FeatureSlider onChange={setDanceableValue} name="danceable" />
-        <FeatureSlider onChange={setEnergeticValue} name="energetic" />
-        <FeatureSlider onChange={setInstrumentalValue} name="instrumental" />
-        <FeatureSlider onChange={setPopularValue} name="popular" />
-        <FeatureSlider onChange={setLivelyValue} name="lively" />
-      </Widget>
-      <SimpleButton label="Magic!" onClick={() => getRec()} />
-    </div>
+    </>
   );
 };

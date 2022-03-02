@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Container, Stack } from '@mui/material';
 import { AudioFeatures } from './components/audio-features';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Recommendations } from './components/recommendations';
 
 const spotifyTheme = createTheme({
   palette: {
@@ -24,7 +23,6 @@ export const App = () => {
           spacing={2}
         >
           <AudioFeatures />
-          <Recommendations />
         </Stack>
       </Container>
     </ThemeProvider>

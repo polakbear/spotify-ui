@@ -4,7 +4,7 @@ import { Chip, Slider } from '@mui/material';
 //  theme.palette.mode === 'dark' ? 'rgb(0,0,0)' : 'rgb(255,255,255,0.4)',
 export const Widget = styled('div')(({ theme }) => ({
   padding: 16,
-  borderRadius: 4,
+  borderRadius: 2,
   width: 370,
   maxWidth: '100%',
   margin: 'auto',
@@ -39,7 +39,7 @@ export const AudioFeatureSlider = styled(Slider)({
   },
   '& .MuiSlider-valueLabel': {
     lineHeight: 1.2,
-    fontSize: 12,
+    fontSize: 14,
     background: 'unset',
     padding: 0,
     width: 32,

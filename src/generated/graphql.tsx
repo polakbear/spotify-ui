@@ -101,6 +101,7 @@ export type QueryArtistsArgs = {
 
 export type QueryRecommendationsArgs = {
   audioFeatures?: InputMaybe<AudioFeatures>;
+  seedGenres?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -121,7 +122,7 @@ export type SongsResult = {
 export type Track = {
   __typename?: 'Track';
   album?: Maybe<Album>;
-  artists?: Maybe<Array<Maybe<Artist>>>;
+  artists?: Maybe<Array<Maybe<Scalars['String']>>>;
   available_markets?: Maybe<Array<Maybe<Scalars['String']>>>;
   disc_number?: Maybe<Scalars['Int']>;
   duration_human?: Maybe<Scalars['String']>;
@@ -151,10 +152,11 @@ export type SearchArtistsQuery = { __typename?: 'Query', artists?: { __typename?
 
 export type LoadRecommendationsQueryVariables = Exact<{
   features?: InputMaybe<AudioFeatures>;
+  genres?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type LoadRecommendationsQuery = { __typename?: 'Query', recommendations?: { __typename?: 'RecommendationsResult', tracks?: Array<{ __typename?: 'Track', name?: string | null, duration_human?: string | null, popularity?: number | null, preview_url?: string | null, href?: string | null, artists?: Array<{ __typename?: 'Artist', name?: string | null } | null> | null, album?: { __typename?: 'Album', name?: string | null } | null } | null> | null } | null };
+export type LoadRecommendationsQuery = { __typename?: 'Query', recommendations?: { __typename?: 'RecommendationsResult', tracks?: Array<{ __typename?: 'Track', artists?: Array<string | null> | null, name?: string | null, duration_human?: string | null, popularity?: number | null, preview_url?: string | null, href?: string | null, uri?: string | null, album?: { __typename?: 'Album', name?: string | null } | null } | null> | null } | null };
 
 
 export const GetGenresDocument = gql`
@@ -240,12 +242,10 @@ export type SearchArtistsQueryHookResult = ReturnType<typeof useSearchArtistsQue
 export type SearchArtistsLazyQueryHookResult = ReturnType<typeof useSearchArtistsLazyQuery>;
 export type SearchArtistsQueryResult = Apollo.QueryResult<SearchArtistsQuery, SearchArtistsQueryVariables>;
 export const LoadRecommendationsDocument = gql`
-    query loadRecommendations($features: AudioFeatures) {
-  recommendations(audioFeatures: $features) {
+    query loadRecommendations($features: AudioFeatures, $genres: String) {
+  recommendations(audioFeatures: $features, seedGenres: $genres) {
     tracks {
-      artists {
-        name
-      }
+      artists
       album {
         name
       }
@@ -254,6 +254,7 @@ export const LoadRecommendationsDocument = gql`
       popularity
       preview_url
       href
+      uri
     }
   }
 }
@@ -272,6 +273,7 @@ export const LoadRecommendationsDocument = gql`
  * const { data, loading, error } = useLoadRecommendationsQuery({
  *   variables: {
  *      features: // value for 'features'
+ *      genres: // value for 'genres'
  *   },
  * });
  */

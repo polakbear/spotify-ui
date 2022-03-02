@@ -8,7 +8,11 @@ interface AutocompleteOption {
   label: string;
 }
 
-export const Genres: React.FC = () => {
+interface GenresProps {
+  updateGenres: (genres: string) => void;
+}
+
+export const Genres = ({ updateGenres }: GenresProps) => {
   const { loading, error, data } = useGetGenresQuery();
   if (loading) return <>loading</>;
   if (error) return <p>boo.</p>;
@@ -31,6 +35,14 @@ export const Genres: React.FC = () => {
   if (data) {
     options = convert(data?.genres?.result);
   }
+
+  const appendGenre = (obj: AutocompleteOption[]) => {
+    const selected = obj.map((opt) => {
+      return opt.label;
+    });
+
+    updateGenres(selected.join(','));
+  };
 
   return (
     <>
@@ -57,6 +69,9 @@ export const Genres: React.FC = () => {
             placeholder=""
           />
         )}
+        onChange={(_, opt) => {
+          appendGenre(opt);
+        }}
       />
     </>
   );
