@@ -1,38 +1,25 @@
 import React from 'react';
 import { Genre, useGetGenresQuery } from '../generated/graphql';
-import { Autocomplete, Option } from 'chakra-ui-simple-autocomplete';
-import { Badge, Box } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import { WallPaper, Widget } from './styles';
+import { Container } from '@mui/material';
 
-const selectedBadge = (option: Option) => {
-  return (
-    <Badge
-      borderRadius="md"
-      px="4"
-      colorScheme="messenger"
-      mx={2}
-      cursor="pointer"
-    >
-      {option.label}
-      <CloseIcon ml={1} w={2} h={2} mb="4px" />
-    </Badge>
-  );
-};
+interface AutocompleteOption {
+  label: string;
+}
 
 export const Genres: React.FC = () => {
-  // const [options, setOptions] = React.useState<Option[]>([]);
-  const [result, setResult] = React.useState<Option[]>([]);
-
   const { loading, error, data } = useGetGenresQuery();
   if (loading) return <>loading</>;
   if (error) return <p>boo.</p>;
   if (!data) return <p>nothing found</p>;
 
-  const convert = (data: any): Option[] => {
+  const convert = (data: any): AutocompleteOption[] => {
     if (data) {
       return data.map((genre: Genre) => {
         return {
-          value: genre?.name ?? '',
           label: genre?.name ?? '',
         };
       });
@@ -41,32 +28,44 @@ export const Genres: React.FC = () => {
     return [];
   };
 
-  let options: Option[] = [];
+  let options: AutocompleteOption[] = [];
 
   if (data) {
     options = convert(data?.genres?.result);
   }
 
   return (
-    <div>
-      <h3>Genres</h3>
-      <Box maxW="md">
-        <Autocomplete
-          options={options}
-          result={result}
-          allowCreation={false}
-          setResult={(options: Option[]) => setResult(options)}
-          placeholder="start typing..."
-          renderBadge={selectedBadge}
-        />
-      </Box>
-    </div>
+    <>
+      <Container maxWidth="xl">
+        <Stack
+          maxWidth="xl"
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+          spacing={2}
+        >
+          <Widget>
+            <Autocomplete
+              multiple
+              id="tags-standard"
+              options={options}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Pick a few genres"
+                  placeholder=""
+                />
+              )}
+            />
+          </Widget>
+          <Widget>HELLO</Widget>
+          <Widget>HELLO</Widget>
+          <Widget>HELLO</Widget>
+        </Stack>
+      </Container>
+      <WallPaper />
+    </>
   );
-
-  // const foo = [
-  //   { value: 'javascript', label: 'Javascript' },
-  //   { value: 'chakra', label: 'Chakra' },
-  //   { value: 'react', label: 'React' },
-  //   { value: 'css', label: 'CSS' },
-  // ];
 };
