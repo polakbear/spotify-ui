@@ -2,9 +2,6 @@ import React from 'react';
 import { Genre, useGetGenresQuery } from '../generated/graphql';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import { Container } from '@mui/material';
-import { WallPaper, Widget } from './styles';
 
 interface AutocompleteOption {
   label: string;
@@ -36,36 +33,20 @@ export const Genres: React.FC = () => {
 
   return (
     <>
-      <Container maxWidth="xl">
-        <Stack
-          maxWidth="xl"
-          direction="row"
-          justifyContent="space-around"
-          alignItems="center"
-          spacing={2}
-        >
-          <Widget>
-            <Autocomplete
-              multiple
-              id="tags-standard"
-              options={options}
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="standard"
-                  label="Pick a few genres"
-                  placeholder=""
-                />
-              )}
-            />
-          </Widget>
-          <Widget>HELLO</Widget>
-          <Widget>HELLO</Widget>
-          <Widget>HELLO</Widget>
-        </Stack>
-      </Container>
-      <WallPaper />
+      <Autocomplete
+        multiple
+        id="tags-standard"
+        options={options}
+        getOptionLabel={(option) => option.label}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Pick a few genres"
+            placeholder=""
+          />
+        )}
+      />
     </>
   );
 };
