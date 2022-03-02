@@ -3,8 +3,8 @@ import { Genre, useGetGenresQuery } from '../generated/graphql';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { WallPaper, Widget } from './styles';
 import { Container } from '@mui/material';
+import { WallPaper, Widget } from './styles';
 
 interface AutocompleteOption {
   label: string;
