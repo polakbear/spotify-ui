@@ -1,33 +1,14 @@
 import * as React from 'react';
-import {
-  Box,
-  ChakraProvider,
-  Code,
-  Grid,
-  Link,
-  Text,
-  theme,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, ChakraProvider, Grid, HStack, theme } from '@chakra-ui/react';
+import { Genres } from './components/genres';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
+    <Box textAlign="left" fontSize="l">
       <Grid minH="100vh" p={3}>
-        <VStack spacing={8}>
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
+        <HStack spacing={2}>
+          <Genres />
+        </HStack>
       </Grid>
     </Box>
   </ChakraProvider>
