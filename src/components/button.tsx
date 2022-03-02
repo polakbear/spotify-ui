@@ -53,10 +53,7 @@ interface SimpleButtonProps {
   label: string;
 }
 
-export const UnstyledButtonsSimple = ({
-  onClick,
-  label,
-}: SimpleButtonProps) => {
+export const SimpleButton = ({ onClick, label }: SimpleButtonProps) => {
   return (
     <Stack spacing={2} direction="row">
       <CustomButton onClick={onClick}>{label}</CustomButton>

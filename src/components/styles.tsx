@@ -1,10 +1,10 @@
 import { styled } from '@mui/material/styles';
-import { Slider } from '@mui/material';
+import { Chip, Slider } from '@mui/material';
 
 //  theme.palette.mode === 'dark' ? 'rgb(0,0,0)' : 'rgb(255,255,255,0.4)',
 export const Widget = styled('div')(({ theme }) => ({
   padding: 16,
-  borderRadius: 16,
+  borderRadius: 4,
   width: 370,
   maxWidth: '100%',
   margin: 'auto',
@@ -13,6 +13,11 @@ export const Widget = styled('div')(({ theme }) => ({
   backgroundColor: 'rgb(30, 215, 96)',
   backdropFilter: 'blur(40px)',
 }));
+
+export const GenreChip = styled(Chip)({
+  // backgroundColor: 'rgb(0, 0, 0)',
+  color: 'white',
+});
 
 export const AudioFeatureSlider = styled(Slider)({
   color: 'rgb(0, 0, 0)',

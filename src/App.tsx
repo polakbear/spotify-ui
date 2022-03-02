@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Genres } from './components/genres';
-import { Widget } from './components/styles';
 import { Container, Stack } from '@mui/material';
 import { AudioFeatures } from './components/audio-features';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Recommendations } from './components/recommendations';
 
 const spotifyTheme = createTheme({
   palette: {
@@ -21,15 +20,11 @@ export const App = () => {
           maxWidth="lg"
           direction="row"
           justifyContent="space-around"
-          alignItems="center"
+          alignItems="flex-start"
           spacing={2}
         >
-          <Widget>
-            <Genres />
-          </Widget>
-          <Widget>
-            <AudioFeatures />
-          </Widget>
+          <AudioFeatures />
+          <Recommendations />
         </Stack>
       </Container>
     </ThemeProvider>
