@@ -68,23 +68,18 @@ export const AudioFeatures: React.FC = () => {
   return (
     <>
       <div>
+        <SimpleButton label="Magic!" onClick={() => getRec()} />
         <Widget>
           <Genres updateGenres={updateGenres} />
         </Widget>
-        <div>foo</div>
+        <div />
         <Widget>
-          <SimpleButton label="Magic!" onClick={() => getRec()} />
-          <div>
-            <FeatureSlider onChange={setAcousticValue} name="acoustic" />
-            <FeatureSlider onChange={setDanceableValue} name="danceable" />
-            <FeatureSlider onChange={setEnergeticValue} name="energetic" />
-            <FeatureSlider
-              onChange={setInstrumentalValue}
-              name="instrumental"
-            />
-            <FeatureSlider onChange={setPopularValue} name="popular" />
-            <FeatureSlider onChange={setLivelyValue} name="lively" />
-          </div>
+          <FeatureSlider onChange={setAcousticValue} name="acoustic" />
+          <FeatureSlider onChange={setDanceableValue} name="danceable" />
+          <FeatureSlider onChange={setEnergeticValue} name="energetic" />
+          <FeatureSlider onChange={setInstrumentalValue} name="instrumental" />
+          <FeatureSlider onChange={setPopularValue} name="popular" />
+          <FeatureSlider onChange={setLivelyValue} name="lively" />
         </Widget>
       </div>
       <Widget sx={{ padding: 0 }}>

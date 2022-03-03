@@ -6,7 +6,7 @@ import ButtonUnstyled, {
 } from '@mui/base/ButtonUnstyled';
 import { styled } from '@mui/system';
 
-const blue = {
+const buttonColors = {
   500: 'rgb(0, 0, 0)',
   600: 'rgb(0, 0, 0)',
   700: 'rgb(0, 0, 0)',
@@ -16,7 +16,7 @@ const CustomButtonRoot = styled('button')`
   font-family: IBM Plex Sans, sans-serif;
   font-weight: bold;
   font-size: 0.875rem;
-  background-color: ${blue[500]};
+  background-color: ${buttonColors[500]};
   padding: 12px 24px;
   border-radius: 8px;
   color: white;
@@ -25,22 +25,17 @@ const CustomButtonRoot = styled('button')`
   border: none;
 
   &:hover {
-    background-color: ${blue[600]};
+    background-color: ${buttonColors[600]};
   }
 
   &.${buttonUnstyledClasses.active} {
-    background-color: ${blue[700]};
+    background-color: ${buttonColors[700]};
   }
 
   &.${buttonUnstyledClasses.focusVisible} {
     box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1),
       0 0 0 5px rgba(0, 127, 255, 0.5);
     outline: none;
-  }
-
-  &.${buttonUnstyledClasses.disabled} {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 `;
 
