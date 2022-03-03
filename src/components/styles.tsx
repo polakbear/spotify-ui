@@ -1,5 +1,7 @@
 import { styled } from '@mui/material/styles';
-import { Chip, Slider } from '@mui/material';
+import { Chip, Slider, Typography } from '@mui/material';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 
 //  theme.palette.mode === 'dark' ? 'rgb(0,0,0)' : 'rgb(255,255,255,0.4)',
 export const Widget = styled('div')(({ theme }) => ({
@@ -56,4 +58,24 @@ export const AudioFeatureSlider = styled(Slider)({
       transform: 'rotate(45deg)',
     },
   },
+});
+
+export const SongDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: '1px solid rgba(0, 0, 0, .125)',
+  fontSize: '12px',
+  backgroundColor: 'rgb(30, 215, 96)',
+}));
+
+export const SongTitle = styled(MuiAccordionSummary)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: '1px solid rgba(0, 0, 0, .125)',
+  fontSize: '12px',
+  backgroundColor: 'rgb(0, 0, 0)',
+  color: 'white',
+  marginTop: '-16px',
+}));
+
+export const SongHeaderTypography = styled(Typography)({
+  fontSize: '14px',
 });

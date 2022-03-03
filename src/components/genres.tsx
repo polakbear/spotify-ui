@@ -14,11 +14,8 @@ interface GenresProps {
 
 export const Genres = ({ updateGenres }: GenresProps) => {
   const { loading, error, data } = useGetGenresQuery();
-  if (loading) return <>loading</>;
-  if (error) return <p>boo.</p>;
-  if (!data) return <p>nothing found</p>;
 
-  const convert = (data: any): AutocompleteOption[] => {
+  const convert = (data: Genre[]): AutocompleteOption[] | undefined => {
     if (data) {
       return data.map((genre: Genre) => {
         return {
@@ -26,23 +23,27 @@ export const Genres = ({ updateGenres }: GenresProps) => {
         };
       });
     }
-
-    return [];
   };
 
-  let options: AutocompleteOption[] = [];
+  let options: AutocompleteOption[] | undefined = [];
 
   if (data) {
-    options = convert(data?.genres?.result);
+    options = convert(data?.genres);
   }
 
-  const appendGenre = (obj: AutocompleteOption[]) => {
-    const selected = obj.map((opt) => {
-      return opt.label;
-    });
+  const appendGenre = (option: AutocompleteOption[]) => {
+    let selected = option
+      .map((opt) => {
+        return opt.label;
+      })
+      .join(',');
 
-    updateGenres(selected.join(','));
+    updateGenres(selected);
   };
+
+  if (loading) return <>loading</>;
+  if (error || !options || options.length === 0) return <p>boo.</p>;
+  if (!data) return <p>nothing found</p>;
 
   return (
     <>
@@ -65,7 +66,7 @@ export const Genres = ({ updateGenres }: GenresProps) => {
             {...params}
             variant="standard"
             color="secondary"
-            label="Pick a few genres"
+            label="Seeding genres, resulting tracks might not be of these genres"
             placeholder=""
           />
         )}

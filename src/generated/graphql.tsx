@@ -73,11 +73,6 @@ export type Genre = {
   name?: Maybe<Scalars['String']>;
 };
 
-export type GenresResult = {
-  __typename?: 'GenresResult';
-  result?: Maybe<Array<Maybe<Genre>>>;
-};
-
 export type Image = {
   __typename?: 'Image';
   height?: Maybe<Scalars['Int']>;
@@ -88,7 +83,7 @@ export type Image = {
 export type Query = {
   __typename?: 'Query';
   artists?: Maybe<ArtistsResult>;
-  genres?: Maybe<GenresResult>;
+  genres: Array<Genre>;
   recommendations?: Maybe<RecommendationsResult>;
   songs?: Maybe<SongsResult>;
 };
@@ -141,7 +136,7 @@ export type Track = {
 export type GetGenresQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGenresQuery = { __typename?: 'Query', genres?: { __typename?: 'GenresResult', result?: Array<{ __typename?: 'Genre', name?: string | null } | null> | null } | null };
+export type GetGenresQuery = { __typename?: 'Query', genres: Array<{ __typename?: 'Genre', name?: string | null }> };
 
 export type SearchArtistsQueryVariables = Exact<{
   searchString: Scalars['String'];
@@ -162,9 +157,7 @@ export type LoadRecommendationsQuery = { __typename?: 'Query', recommendations?:
 export const GetGenresDocument = gql`
     query getGenres {
   genres {
-    result {
-      name
-    }
+    name
   }
 }
     `;

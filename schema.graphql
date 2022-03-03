@@ -31,10 +31,6 @@ type Genre {
     name: String
 }
 
-type GenresResult {
-    result: [Genre]
-}
-
 type Image {
     height: Int
     url: String
@@ -43,7 +39,7 @@ type Image {
 
 type Query {
     artists(searchString: String!): ArtistsResult
-    genres: GenresResult
+    genres: [Genre!]!
     recommendations(audioFeatures: AudioFeatures, seedGenres: String): RecommendationsResult
     songs(searchString: String!): SongsResult
 }

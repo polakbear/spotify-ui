@@ -38,8 +38,6 @@ export const AudioFeatures: React.FC = () => {
         },
       });
 
-      console.log(selectedGenres);
-
       const trackData = data?.recommendations?.tracks;
 
       if (trackData) {
@@ -75,14 +73,19 @@ export const AudioFeatures: React.FC = () => {
         </Widget>
         <div>foo</div>
         <Widget>
-          <FeatureSlider onChange={setAcousticValue} name="acoustic" />
-          <FeatureSlider onChange={setDanceableValue} name="danceable" />
-          <FeatureSlider onChange={setEnergeticValue} name="energetic" />
-          <FeatureSlider onChange={setInstrumentalValue} name="instrumental" />
-          <FeatureSlider onChange={setPopularValue} name="popular" />
-          <FeatureSlider onChange={setLivelyValue} name="lively" />
+          <SimpleButton label="Magic!" onClick={() => getRec()} />
+          <div>
+            <FeatureSlider onChange={setAcousticValue} name="acoustic" />
+            <FeatureSlider onChange={setDanceableValue} name="danceable" />
+            <FeatureSlider onChange={setEnergeticValue} name="energetic" />
+            <FeatureSlider
+              onChange={setInstrumentalValue}
+              name="instrumental"
+            />
+            <FeatureSlider onChange={setPopularValue} name="popular" />
+            <FeatureSlider onChange={setLivelyValue} name="lively" />
+          </div>
         </Widget>
-        <SimpleButton label="Magic!" onClick={() => getRec()} />
       </div>
       <Widget sx={{ padding: 0 }}>
         {tracks !== undefined && <Recommendations tracks={trackList} />}
