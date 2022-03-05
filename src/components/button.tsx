@@ -7,13 +7,13 @@ import ButtonUnstyled, {
 import { styled } from '@mui/system';
 
 const buttonColors = {
-  500: 'rgb(0, 0, 0)',
-  600: 'rgb(0, 0, 0)',
+  500: 'rgb(30, 215, 96)',
+  600: 'rgba(30, 215, 96, 0.5)',
   700: 'rgb(0, 0, 0)',
 };
 
 const CustomButtonRoot = styled('button')`
-  font-family: IBM Plex Sans, sans-serif;
+  font-family: sans-serif;
   font-weight: bold;
   font-size: 0.875rem;
   background-color: ${buttonColors[500]};
@@ -23,6 +23,7 @@ const CustomButtonRoot = styled('button')`
   transition: all 150ms ease;
   cursor: pointer;
   border: none;
+  margin: 10px;
 
   &:hover {
     background-color: ${buttonColors[600]};

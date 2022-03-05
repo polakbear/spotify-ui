@@ -26,12 +26,23 @@ export const SongCard = ({ track }: SongDetailsProps) => {
     >
       <CardActionArea>
         <CardContent>
+          <Avatar
+            sx={{
+              width: '64px',
+              height: '64px',
+              position: 'absolute',
+              top: '2%',
+              right: '80%',
+            }}
+            alt={artistName}
+            src={track.album.images[0].url ?? ''}
+          />{' '}
           <Typography
             sx={{
               width: '300px',
               position: 'absolute',
               top: '0%',
-              right: '0%',
+              right: '-56%',
               fontSize: '14px',
             }}
             variant="subtitle2"
@@ -43,7 +54,7 @@ export const SongCard = ({ track }: SongDetailsProps) => {
               width: '300px',
               position: 'absolute',
               top: '5%',
-              right: '0%',
+              right: '-42%',
               fontSize: '10px',
             }}
           >
