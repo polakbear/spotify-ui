@@ -4,10 +4,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { GenreChip } from './styles';
 
-interface AutocompleteOption {
-  label: string;
-}
-
 interface GenresProps {
   updateGenres: (genres: string) => void;
 }
