@@ -1,7 +1,7 @@
 overwrite: true
 documents: 'src/schema/spotify.graphql'
-#schema: "https://gql-spotify.herokuapp.com/api"
-schema: "http://localhost:4000/api"
+schema: "https://gql-spotify.herokuapp.com/api"
+#schema: "http://localhost:4000/api"
 generates:
   src/generated/graphql.tsx:
     plugins:

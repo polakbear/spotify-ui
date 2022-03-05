@@ -10,8 +10,8 @@ import {
 
 const client = new ApolloClient({
   link: createHttpLink({
-    // uri: 'https://gql-spotify.herokuapp.com/api',
-    uri: 'http://localhost:4000/api',
+    uri: 'https://gql-spotify.herokuapp.com/api',
+    // uri: 'http://localhost:4000/api',
   }),
   cache: new InMemoryCache(),
 });
