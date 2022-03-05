@@ -1,19 +1,13 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import { Track } from './track';
-
-export interface TrackListTrack {
-  title: string;
-  artist: string;
-  album: string;
-  duration: string;
-}
+import { Song } from './song';
+import { Track } from '../generated/graphql';
 
 interface RecommendationProps {
-  tracks: TrackListTrack[];
+  tracks: Track[];
 }
 
-export const Recommendations = (props: RecommendationProps) => {
+export const Recommendations = ({ tracks }: RecommendationProps) => {
   return (
     <Stack
       maxWidth="lg"
@@ -22,9 +16,9 @@ export const Recommendations = (props: RecommendationProps) => {
       alignItems="start"
       spacing={0}
     >
-      {props.tracks.map((track, index) => {
+      {tracks.map((track, index) => {
         let panelName = `panel${index + 1}`;
-        return <Track key={index} panelName={panelName} track={track} />;
+        return <Song key={index} panelName={panelName} track={track} />;
       })}
     </Stack>
   );

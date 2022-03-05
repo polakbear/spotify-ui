@@ -20,20 +20,27 @@ export type Album = {
   artists?: Maybe<Array<Maybe<Artist>>>;
   available_markets?: Maybe<Array<Maybe<Scalars['String']>>>;
   href?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  images: Array<Image>;
   label?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  release_date: Scalars['String'];
 };
 
 export type Artist = {
   __typename?: 'Artist';
-  genres?: Maybe<Array<Maybe<Genre>>>;
-  href?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  images?: Maybe<Array<Maybe<Image>>>;
-  name?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  uri?: Maybe<Scalars['String']>;
+  genres?: Maybe<Array<Maybe<Scalars['String']>>>;
+  href: Scalars['String'];
+  id: Scalars['String'];
+  images: Array<Maybe<Image>>;
+  name: Scalars['String'];
+  uri: Scalars['String'];
+};
+
+export type ArtistImageMap = {
+  __typename?: 'ArtistImageMap';
+  id: Scalars['String'];
+  img: Scalars['String'];
 };
 
 export type ArtistsResult = {
@@ -42,6 +49,25 @@ export type ArtistsResult = {
 };
 
 export type AudioFeatures = {
+  __typename?: 'AudioFeatures';
+  acousticness: Scalars['Float'];
+  danceability: Scalars['Float'];
+  duration_ms: Scalars['Int'];
+  energy: Scalars['Float'];
+  id: Scalars['String'];
+  instrumentalness: Scalars['Float'];
+  key: Scalars['Int'];
+  liveness: Scalars['Float'];
+  loudness: Scalars['Float'];
+  mode: Scalars['Int'];
+  speechiness: Scalars['Float'];
+  tempo: Scalars['Float'];
+  track_href: Scalars['String'];
+  uri: Scalars['String'];
+  valence: Scalars['Float'];
+};
+
+export type AudioOptions = {
   analysis_url?: InputMaybe<Scalars['String']>;
   duration_ms?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
@@ -68,9 +94,9 @@ export type AudioFeatures = {
   tempo?: InputMaybe<Scalars['Int']>;
 };
 
-export type Genre = {
-  __typename?: 'Genre';
-  name?: Maybe<Scalars['String']>;
+export type ExternalUrl = {
+  __typename?: 'ExternalURL';
+  spotify: Scalars['String'];
 };
 
 export type Image = {
@@ -82,31 +108,58 @@ export type Image = {
 
 export type Query = {
   __typename?: 'Query';
-  artists?: Maybe<ArtistsResult>;
-  genres: Array<Genre>;
-  recommendations?: Maybe<RecommendationsResult>;
-  songs?: Maybe<SongsResult>;
+  artist: Artist;
+  artists: Array<Artist>;
+  audioFeatures: AudioFeatures;
+  genres: Array<Scalars['String']>;
+  recommendations: Array<Maybe<Track>>;
+};
+
+
+export type QueryArtistArgs = {
+  artistId: Scalars['String'];
 };
 
 
 export type QueryArtistsArgs = {
-  searchString: Scalars['String'];
+  artistIds: Array<Scalars['String']>;
+};
+
+
+export type QueryAudioFeaturesArgs = {
+  id: Scalars['String'];
 };
 
 
 export type QueryRecommendationsArgs = {
-  audioFeatures?: InputMaybe<AudioFeatures>;
+  audioOptions?: InputMaybe<AudioOptions>;
   seedGenres?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QuerySongsArgs = {
-  searchString: Scalars['String'];
 };
 
 export type RecommendationsResult = {
   __typename?: 'RecommendationsResult';
   tracks?: Maybe<Array<Maybe<Track>>>;
+};
+
+export type SimplifiedAlbum = {
+  __typename?: 'SimplifiedAlbum';
+  artists?: Maybe<Array<Maybe<SimplifiedArtist>>>;
+  available_markets?: Maybe<Array<Maybe<Scalars['String']>>>;
+  href?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  images: Array<Image>;
+  label?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  release_date: Scalars['String'];
+};
+
+export type SimplifiedArtist = {
+  __typename?: 'SimplifiedArtist';
+  external_urls?: Maybe<Array<Maybe<ExternalUrl>>>;
+  href: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  uri: Scalars['String'];
 };
 
 export type SongsResult = {
@@ -116,49 +169,45 @@ export type SongsResult = {
 
 export type Track = {
   __typename?: 'Track';
-  album?: Maybe<Album>;
-  artists?: Maybe<Array<Maybe<Scalars['String']>>>;
+  album: SimplifiedAlbum;
+  artist_display: Scalars['String'];
+  artists: Array<SimplifiedArtist>;
   available_markets?: Maybe<Array<Maybe<Scalars['String']>>>;
   disc_number?: Maybe<Scalars['Int']>;
   duration_human?: Maybe<Scalars['String']>;
   duration_ms?: Maybe<Scalars['Float']>;
   explicit?: Maybe<Scalars['Boolean']>;
   href?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
   popularity?: Maybe<Scalars['Int']>;
-  preview_url?: Maybe<Scalars['String']>;
-  track_number?: Maybe<Scalars['Int']>;
-  type?: Maybe<Scalars['String']>;
-  uri?: Maybe<Scalars['String']>;
+  uri: Scalars['String'];
 };
 
 export type GetGenresQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGenresQuery = { __typename?: 'Query', genres: Array<{ __typename?: 'Genre', name?: string | null }> };
+export type GetGenresQuery = { __typename?: 'Query', genres: Array<string> };
 
-export type SearchArtistsQueryVariables = Exact<{
-  searchString: Scalars['String'];
+export type AudioFeaturesQueryVariables = Exact<{
+  id: Scalars['String'];
 }>;
 
 
-export type SearchArtistsQuery = { __typename?: 'Query', artists?: { __typename?: 'ArtistsResult', result?: Array<{ __typename?: 'Artist', id?: string | null, name?: string | null, images?: Array<{ __typename?: 'Image', url?: string | null, height?: number | null, width?: number | null } | null> | null, genres?: Array<{ __typename?: 'Genre', name?: string | null } | null> | null } | null> | null } | null };
+export type AudioFeaturesQuery = { __typename?: 'Query', audioFeatures: { __typename?: 'AudioFeatures', acousticness: number, danceability: number, duration_ms: number, energy: number, liveness: number, instrumentalness: number, speechiness: number, loudness: number, tempo: number } };
 
 export type LoadRecommendationsQueryVariables = Exact<{
-  features?: InputMaybe<AudioFeatures>;
+  audioOptions?: InputMaybe<AudioOptions>;
   genres?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type LoadRecommendationsQuery = { __typename?: 'Query', recommendations?: { __typename?: 'RecommendationsResult', tracks?: Array<{ __typename?: 'Track', artists?: Array<string | null> | null, name?: string | null, duration_human?: string | null, popularity?: number | null, preview_url?: string | null, href?: string | null, uri?: string | null, album?: { __typename?: 'Album', name?: string | null } | null } | null> | null } | null };
+export type LoadRecommendationsQuery = { __typename?: 'Query', recommendations: Array<{ __typename?: 'Track', name: string, duration_human?: string | null, popularity?: number | null, href?: string | null, uri: string, artist_display: string, id: string, artists: Array<{ __typename?: 'SimplifiedArtist', name: string, id: string }>, album: { __typename?: 'SimplifiedAlbum', name: string, release_date: string, images: Array<{ __typename?: 'Image', url?: string | null }> } } | null> };
 
 
 export const GetGenresDocument = gql`
     query getGenres {
-  genres {
-    name
-  }
+  genres
 }
     `;
 
@@ -188,67 +237,70 @@ export function useGetGenresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetGenresQueryHookResult = ReturnType<typeof useGetGenresQuery>;
 export type GetGenresLazyQueryHookResult = ReturnType<typeof useGetGenresLazyQuery>;
 export type GetGenresQueryResult = Apollo.QueryResult<GetGenresQuery, GetGenresQueryVariables>;
-export const SearchArtistsDocument = gql`
-    query searchArtists($searchString: String!) {
-  artists(searchString: $searchString) {
-    result {
-      id
-      images {
-        url
-        height
-        width
-      }
-      name
-      genres {
-        name
-      }
-    }
+export const AudioFeaturesDocument = gql`
+    query audioFeatures($id: String!) {
+  audioFeatures(id: $id) {
+    acousticness
+    danceability
+    duration_ms
+    energy
+    liveness
+    instrumentalness
+    speechiness
+    loudness
+    tempo
   }
 }
     `;
 
 /**
- * __useSearchArtistsQuery__
+ * __useAudioFeaturesQuery__
  *
- * To run a query within a React component, call `useSearchArtistsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchArtistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAudioFeaturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAudioFeaturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchArtistsQuery({
+ * const { data, loading, error } = useAudioFeaturesQuery({
  *   variables: {
- *      searchString: // value for 'searchString'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useSearchArtistsQuery(baseOptions: Apollo.QueryHookOptions<SearchArtistsQuery, SearchArtistsQueryVariables>) {
+export function useAudioFeaturesQuery(baseOptions: Apollo.QueryHookOptions<AudioFeaturesQuery, AudioFeaturesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchArtistsQuery, SearchArtistsQueryVariables>(SearchArtistsDocument, options);
+        return Apollo.useQuery<AudioFeaturesQuery, AudioFeaturesQueryVariables>(AudioFeaturesDocument, options);
       }
-export function useSearchArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchArtistsQuery, SearchArtistsQueryVariables>) {
+export function useAudioFeaturesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AudioFeaturesQuery, AudioFeaturesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchArtistsQuery, SearchArtistsQueryVariables>(SearchArtistsDocument, options);
+          return Apollo.useLazyQuery<AudioFeaturesQuery, AudioFeaturesQueryVariables>(AudioFeaturesDocument, options);
         }
-export type SearchArtistsQueryHookResult = ReturnType<typeof useSearchArtistsQuery>;
-export type SearchArtistsLazyQueryHookResult = ReturnType<typeof useSearchArtistsLazyQuery>;
-export type SearchArtistsQueryResult = Apollo.QueryResult<SearchArtistsQuery, SearchArtistsQueryVariables>;
+export type AudioFeaturesQueryHookResult = ReturnType<typeof useAudioFeaturesQuery>;
+export type AudioFeaturesLazyQueryHookResult = ReturnType<typeof useAudioFeaturesLazyQuery>;
+export type AudioFeaturesQueryResult = Apollo.QueryResult<AudioFeaturesQuery, AudioFeaturesQueryVariables>;
 export const LoadRecommendationsDocument = gql`
-    query loadRecommendations($features: AudioFeatures, $genres: String) {
-  recommendations(audioFeatures: $features, seedGenres: $genres) {
-    tracks {
-      artists
-      album {
-        name
-      }
+    query loadRecommendations($audioOptions: AudioOptions, $genres: String) {
+  recommendations(audioOptions: $audioOptions, seedGenres: $genres) {
+    artists {
       name
-      duration_human
-      popularity
-      preview_url
-      href
-      uri
+      id
     }
+    album {
+      name
+      images {
+        url
+      }
+      release_date
+    }
+    name
+    duration_human
+    popularity
+    href
+    uri
+    artist_display
+    id
   }
 }
     `;
@@ -265,7 +317,7 @@ export const LoadRecommendationsDocument = gql`
  * @example
  * const { data, loading, error } = useLoadRecommendationsQuery({
  *   variables: {
- *      features: // value for 'features'
+ *      audioOptions: // value for 'audioOptions'
  *      genres: // value for 'genres'
  *   },
  * });
@@ -284,7 +336,7 @@ export type LoadRecommendationsQueryResult = Apollo.QueryResult<LoadRecommendati
 export const namedOperations = {
   Query: {
     getGenres: 'getGenres',
-    searchArtists: 'searchArtists',
+    audioFeatures: 'audioFeatures',
     loadRecommendations: 'loadRecommendations'
   }
 }

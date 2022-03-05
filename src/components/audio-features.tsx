@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SimpleButton } from './button';
-import { Track, useLoadRecommendationsLazyQuery } from '../generated/graphql';
+import { useLoadRecommendationsLazyQuery } from '../generated/graphql';
 import { FeatureSlider } from './feature-slider';
 import { Genres } from './genres';
 import { Widget } from './styles';
@@ -12,11 +12,11 @@ export const AudioFeatures: React.FC = () => {
   const [energeticValue, setEnergeticValue] = useState('0');
   const [instrumentalValue, setInstrumentalValue] = useState('0');
   const [popularValue, setPopularValue] = useState('0');
-  const [livelyValue, setLivelyValue] = useState('0');
+  const [liveRecordingValue, setLiveRecordingValue] = useState('0');
 
   const [selectedGenres, setSelectedGenres] = useState('');
 
-  const [tracks, setTracks] = useState<any>(null);
+  const [tracks, setTracks] = useState<any>([]);
 
   const audioFeatures = {
     min_acousticness: parseFloat(acousticValue) / 100,
@@ -24,21 +24,21 @@ export const AudioFeatures: React.FC = () => {
     min_energy: parseFloat(energeticValue) / 100,
     min_instrumentalness: parseFloat(instrumentalValue) / 100,
     min_popularity: parseInt(popularValue),
-    min_liveness: parseFloat(livelyValue) / 100,
+    min_liveness: parseFloat(liveRecordingValue) / 100,
   };
 
   const [getRecommendations, { data }] = useLoadRecommendationsLazyQuery();
 
-  const getRec = () => {
+  const getRec = async () => {
     try {
-      void getRecommendations({
+      await getRecommendations({
         variables: {
-          features: audioFeatures,
+          audioOptions: audioFeatures,
           genres: selectedGenres,
         },
       });
 
-      const trackData = data?.recommendations?.tracks;
+      const trackData = data?.recommendations;
 
       if (trackData) {
         setTracks(trackData);
@@ -47,19 +47,6 @@ export const AudioFeatures: React.FC = () => {
       console.error(e);
     }
   };
-
-  let trackList = [];
-
-  if (tracks) {
-    trackList = tracks.map((t: Track) => {
-      return {
-        title: t.name,
-        artist: t.artists?.join(',') ?? '',
-        album: t.album?.name,
-        duration: t.duration_human,
-      };
-    });
-  }
 
   const updateGenres = (genres: string) => {
     setSelectedGenres(genres);
@@ -79,11 +66,11 @@ export const AudioFeatures: React.FC = () => {
           <FeatureSlider onChange={setEnergeticValue} name="energetic" />
           <FeatureSlider onChange={setInstrumentalValue} name="instrumental" />
           <FeatureSlider onChange={setPopularValue} name="popular" />
-          <FeatureSlider onChange={setLivelyValue} name="lively" />
+          <FeatureSlider onChange={setLiveRecordingValue} name="live" />
         </Widget>
       </div>
       <Widget sx={{ padding: 0 }}>
-        {tracks !== undefined && <Recommendations tracks={trackList} />}
+        {tracks !== undefined && <Recommendations tracks={tracks} />}
       </Widget>
     </>
   );

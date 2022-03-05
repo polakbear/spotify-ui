@@ -8,27 +8,51 @@ type Album {
     artists: [Artist]
     available_markets: [String]
     href: String
-    id: String
+    id: String!
+    images: [Image!]!
     label: String
-    name: String
+    name: String!
+    release_date: String!
 }
 
 type Artist {
-    genres: [Genre]
-    href: String
-    id: String
-    images: [Image]
-    name: String
-    type: String
-    uri: String
+    genres: [String]
+    href: String!
+    id: String!
+    images: [Image]!
+    name: String!
+    uri: String!
+}
+
+type ArtistImageMap {
+    id: String!
+    img: String!
 }
 
 type ArtistsResult {
     result: [Artist]
 }
 
-type Genre {
-    name: String
+type AudioFeatures {
+    acousticness: Float!
+    danceability: Float!
+    duration_ms: Int!
+    energy: Float!
+    id: String!
+    instrumentalness: Float!
+    key: Int!
+    liveness: Float!
+    loudness: Float!
+    mode: Int!
+    speechiness: Float!
+    tempo: Float!
+    track_href: String!
+    uri: String!
+    valence: Float!
+}
+
+type ExternalURL {
+    spotify: String!
 }
 
 type Image {
@@ -38,14 +62,34 @@ type Image {
 }
 
 type Query {
-    artists(searchString: String!): ArtistsResult
-    genres: [Genre!]!
-    recommendations(audioFeatures: AudioFeatures, seedGenres: String): RecommendationsResult
-    songs(searchString: String!): SongsResult
+    artist(artistId: String!): Artist!
+    artists(artistIds: [String!]!): [Artist!]!
+    audioFeatures(id: String!): AudioFeatures!
+    genres: [String!]!
+    recommendations(audioOptions: AudioOptions, seedGenres: String): [Track]!
 }
 
 type RecommendationsResult {
     tracks: [Track]
+}
+
+type SimplifiedAlbum {
+    artists: [SimplifiedArtist]
+    available_markets: [String]
+    href: String
+    id: String!
+    images: [Image!]!
+    label: String
+    name: String!
+    release_date: String!
+}
+
+type SimplifiedArtist {
+    external_urls: [ExternalURL]
+    href: String!
+    id: String!
+    name: String!
+    uri: String!
 }
 
 type SongsResult {
@@ -53,24 +97,22 @@ type SongsResult {
 }
 
 type Track {
-    album: Album
-    artists: [String]
+    album: SimplifiedAlbum!
+    artist_display: String!
+    artists: [SimplifiedArtist!]!
     available_markets: [String]
     disc_number: Int
     duration_human: String
     duration_ms: Float
     explicit: Boolean
     href: String
-    id: String
-    name: String
+    id: String!
+    name: String!
     popularity: Int
-    preview_url: String
-    track_number: Int
-    type: String
-    uri: String
+    uri: String!
 }
 
-input AudioFeatures {
+input AudioOptions {
     analysis_url: String
     duration_ms: Int
     id: String

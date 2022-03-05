@@ -61,15 +61,14 @@ export const AudioFeatureSlider = styled(Slider)({
 });
 
 export const SongDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: '1px solid rgba(0, 0, 0, .125)',
+  padding: 0,
   fontSize: '12px',
-  backgroundColor: 'rgb(30, 215, 96)',
+  backgroundColor: 'rgb(0, 0, 0)',
+  borderRadius: 0,
 }));
 
 export const SongTitle = styled(MuiAccordionSummary)(({ theme }) => ({
   padding: theme.spacing(2),
-  borderTop: '1px solid rgba(0, 0, 0, .125)',
   fontSize: '12px',
   backgroundColor: 'rgb(0, 0, 0)',
   color: 'white',

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { TrackListTrack } from './recommendations';
 import { SongDetails, SongHeaderTypography, SongTitle } from './styles';
+import { SongCard } from './song-details';
+import { Track } from '../generated/graphql';
 
 interface TrackProps {
   panelName: string;
-  track: TrackListTrack;
+  track: Track;
 }
 
-export const Track = ({ panelName, track }: TrackProps) => {
+export const Song = ({ panelName, track }: TrackProps) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -25,6 +25,7 @@ export const Track = ({ panelName, track }: TrackProps) => {
       expanded={expanded === `${panelName}`}
       onChange={handleChange(`${panelName}`)}
       elevation={0}
+      square={true}
     >
       <SongTitle
         expandIcon={<ExpandMoreIcon />}
@@ -32,20 +33,11 @@ export const Track = ({ panelName, track }: TrackProps) => {
         id="panel1bh-header"
       >
         <SongHeaderTypography>
-          {track.artist} - {track.title}
+          {track.artists[0].name} - {track.name}
         </SongHeaderTypography>
       </SongTitle>
       <SongDetails>
-        <Typography>Album: {track.album}</Typography>
-        <Typography>Duration: {track.duration}</Typography>
-        <Typography>Album: {track.album}</Typography>
-        <Typography>Duration: {track.duration}</Typography>
-        <Typography>Album: {track.album}</Typography>
-        <Typography>Duration: {track.duration}</Typography>
-        <Typography>Album: {track.album}</Typography>
-        <Typography>Duration: {track.duration}</Typography>
-        <Typography>Album: {track.album}</Typography>
-        <Typography>Duration: {track.duration}</Typography>
+        <SongCard track={track} />
       </SongDetails>
     </Accordion>
   );

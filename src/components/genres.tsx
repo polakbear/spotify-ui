@@ -1,5 +1,5 @@
 import React from 'react';
-import { Genre, useGetGenresQuery } from '../generated/graphql';
+import { useGetGenresQuery } from '../generated/graphql';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { GenreChip } from './styles';
@@ -14,27 +14,10 @@ interface GenresProps {
 
 export const Genres = ({ updateGenres }: GenresProps) => {
   const { loading, error, data } = useGetGenresQuery();
-
-  const convert = (data: Genre[]): AutocompleteOption[] | undefined => {
-    if (data) {
-      return data.map((genre: Genre) => {
-        return {
-          label: genre?.name ?? '',
-        };
-      });
-    }
-  };
-
-  let options: AutocompleteOption[] | undefined = [];
-
-  if (data) {
-    options = convert(data?.genres);
-  }
-
-  const appendGenre = (option: AutocompleteOption[]) => {
+  const appendGenre = (option: string[]) => {
     let selected = option
       .map((opt) => {
-        return opt.label;
+        return opt;
       })
       .join(',');
 
@@ -42,20 +25,22 @@ export const Genres = ({ updateGenres }: GenresProps) => {
   };
 
   if (loading) return <>loading</>;
-  if (error || !options || options.length === 0) return <p>boo.</p>;
+  if (error || !data?.genres || data?.genres.length === 0) return <p>boo.</p>;
   if (!data) return <p>nothing found</p>;
+
+  const { genres } = data;
 
   return (
     <>
       <Autocomplete
         multiple
         id="tags-standard"
-        options={options}
-        getOptionLabel={(option) => option.label}
-        isOptionEqualToValue={(option, value) => option.label === value.label}
+        options={genres}
+        getOptionLabel={(option) => option}
+        isOptionEqualToValue={(option, value) => option === value}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
-            <GenreChip label={option.label} {...getTagProps({ index })} />
+            <GenreChip label={option} {...getTagProps({ index })} />
           ))
         }
         sx={{
