@@ -6,7 +6,7 @@ import { Genres } from './genres';
 import { Widget } from './styles';
 import { Recommendations } from './recommendations';
 
-export const AudioFeatures: React.FC = () => {
+export const AudioOptions: React.FC = () => {
   const [acousticValue, setAcousticValue] = useState('0');
   const [danceableValue, setDanceableValue] = useState('0');
   const [energeticValue, setEnergeticValue] = useState('0');

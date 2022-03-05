@@ -46,7 +46,7 @@ export const AudioAnalysis = ({ id }: AudioAnalysisProps) => {
   for (const [key, value] of Object.entries(data.audioFeatures)) {
     if (!skip.includes(key) && value !== 'AudioFeatures') {
       dataLabels.push(key);
-      dataValues.push(value * 100);
+      dataValues.push(Math.round(value * 100));
     }
   }
 
@@ -54,7 +54,7 @@ export const AudioAnalysis = ({ id }: AudioAnalysisProps) => {
     labels: dataLabels,
     datasets: [
       {
-        label: 'audio analysis',
+        label: '',
         data: dataValues,
         fill: true,
         borderWidth: 1,
@@ -63,10 +63,23 @@ export const AudioAnalysis = ({ id }: AudioAnalysisProps) => {
         // border: '1px solid rgb(30, 215, 96)',
         pointBackgroundColor: 'rgb(30, 215, 96)',
         pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
+        pointHoverBackgroundColor: 'rgb(30, 215, 96)',
         pointHoverBorderColor: 'rgb(30, 215, 96)',
       },
     ],
   };
-  return <Radar data={chartData} />;
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    ticks: {
+      stepSize: 10,
+      backdropColor: 'rgba(0, 0,  0, 0)',
+    },
+  };
+  // @ts-ignore
+  return <Radar options={options} data={chartData} />;
 };

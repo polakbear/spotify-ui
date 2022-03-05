@@ -17,41 +17,41 @@ export const SongCard = ({ track }: SongDetailsProps) => {
     })
     .join(', ');
 
-  console.log(track);
-
   return (
-    <Card sx={{ backgroundColor: 'black', maxWidth: 370, borderRadius: 0 }}>
+    <Card
+      sx={{
+        maxWidth: 370,
+        borderRadius: 0,
+      }}
+    >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={track.album.images[0].url ?? ''}
-          alt={track.album.name}
-          sx={{ borderRadius: 0 }}
-        />
-        <Avatar
-          sx={{
-            width: '40px',
-            height: '40px',
-            position: 'absolute',
-            top: '35%',
-            right: '15%',
-          }}
-          alt={artistName}
-          src={track.artist_display}
-        />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            sx={{
+              width: '300px',
+              position: 'absolute',
+              top: '0%',
+              right: '0%',
+              fontSize: '14px',
+            }}
+            variant="subtitle2"
+          >
+            {track.name}
+          </Typography>
+          <Typography
+            sx={{
+              width: '300px',
+              position: 'absolute',
+              top: '5%',
+              right: '0%',
+              fontSize: '10px',
+            }}
+          >
             {artistName}
           </Typography>
           <AudioAnalysis id={track.id} />
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          foo
-        </Button>
-      </CardActions>
     </Card>
   );
 };

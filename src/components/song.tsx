@@ -4,6 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SongDetails, SongHeaderTypography, SongTitle } from './styles';
 import { SongCard } from './song-details';
 import { Track } from '../generated/graphql';
+import { Avatar } from '@mui/material';
 
 interface TrackProps {
   panelName: string;
@@ -35,6 +36,17 @@ export const Song = ({ panelName, track }: TrackProps) => {
         <SongHeaderTypography>
           {track.artists[0].name} - {track.name}
         </SongHeaderTypography>
+        <Avatar
+          sx={{
+            width: '24px',
+            height: '24px',
+            position: 'absolute',
+            top: '30%',
+            right: '0%',
+          }}
+          alt={track.artists[0].name}
+          src={track.artist_display}
+        />
       </SongTitle>
       <SongDetails>
         <SongCard track={track} />

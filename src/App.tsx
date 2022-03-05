@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Container, Stack } from '@mui/material';
-import { AudioFeatures } from './components/audio-features';
+import { AudioOptions } from './components/audio-options';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const spotifyTheme = createTheme({
@@ -22,7 +22,7 @@ export const App = () => {
           alignItems="flex-start"
           spacing={2}
         >
-          <AudioFeatures />
+          <AudioOptions />
         </Stack>
       </Container>
     </ThemeProvider>
